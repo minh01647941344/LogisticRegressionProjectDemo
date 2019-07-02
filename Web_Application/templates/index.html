@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Logistic Regression</title>
+	<style>
+		fieldset {
+			display: block;
+			margin-left: 2px;
+			margin-right: 2px;
+			padding-top: 0.35em;
+			padding-bottom: 0.625em;
+			padding-left: 0.75em;
+			padding-right: 0.75em;
+			border: 2px groove (internal value);
+			border-radius: 5px;
+		}
+
+		legend {
+			display: block;
+			padding-left: 2px;
+			padding-right: 2px;
+			border: none;
+			font-size: 150%;
+			color: mediumblue;
+		}
+
+		h3 {
+			margin-bottom: 1%
+		}
+	</style>
+</head>
+
+<body>
+	<!-- action="/result" method="POST" -->
+	<form action="/result" method="POST">
+		<div align="center" style="padding-top:2%">
+			<!-- Đánh giá Curriculum Vitae -->
+			<a style="font-size: 250%;color: blue">Curriculum Vitae</a>
+			<!-- Những trường có ký hiệu (*) là không được để trống! -->
+			<h3 style="color:red;margin-bottom: 3%">Chú ý: Những trường có ký hiệu (*) là không được để trống!</h3>
+			<div style="width:80%">
+				<table style="width:100%">
+					<tbody>
+						<td>
+							<fieldset>
+								<legend>Thông tin cá nhân</legend>
+								<div style="margin-bottom: 5%">
+									<h3>Họ & Tên</h3>
+									<input type="text"
+										style="border-radius:5px;border-color: #8e91ad;padding: 5px;width: 95%;line-height: 1.5" />
+								</div>
+								<div style="margin-bottom: 5%">
+									<h3>Ngày sinh</h3>
+									<input type="text"
+										style="border-radius:5px;border-color: #6e707e;padding: 5px;width: 95%;line-height: 1.5" />
+								</div>
+								<div style="margin-bottom: 5%">
+									<h3>Địa chỉ</h3>
+									<input type="text"
+										style="border-radius:5px;border-color: #6e707e;padding: 5px;width: 95%;line-height: 1.5" />
+								</div>
+								<div style="margin-bottom: 3%">
+									<h3>Số điện thoại</h3>
+									<input type="text"
+										style="border-radius:5px;border-color: #6e707e;padding: 5px;width: 95%;line-height: 1.5" />
+								</div>
+							</fieldset>
+						</td>
+						<td style="width:1%"></td>
+						<td>
+							<fieldset>
+								<legend>Kinh nghiệm làm việc</legend>
+								<div style="margin-bottom: 4%">
+									<!-- Vị trí ứng tuyển -->
+									<h3>Vị trí ứng tuyển<small>*</small></h3>
+									<select
+										style="border-radius:5px;border-color: #6e707e;padding: 5px;width: 98%;line-height: 1.5;border: 2px solid"
+										name="Position">
+										<option value="0">Designer</option>
+										<option value="1">Lập trình viên Frontend Website</option>
+										<option value="2">Lập trình viên Backend Website</option>
+										<option value="3">Lập trình viên ứng dụng di động</option>
+										<option value="4">IT Helpdesk</option>
+										<option value="5">IT Support</option>
+										<option value="6">Kĩ thuật viên bảo trì</option>
+										<option value="7">Kĩ thuật viên hạ tầng mạng</option>
+										<option value="8">Kĩ thuật viên an ninh mạng</option>
+										<option value="9">Kĩ thuật viên an toàn thông tin</option>
+										<option value="10">Chuyên viên quản trị cơ sở dữ liệu</option>
+										<option value="11">Chuyên viên phân tích dữ liệu</option>
+										<option value="12">Chuyên viên phân tích hệ thống</option>
+										<option value="13">Chuyên viên hỗ trợ người dùng</option>
+										<option value="14">Chuyên viên quản lý dự án</option>
+										<option value="15">Chuyên viên triển khai dự án</option>
+										<option value="16">Kĩ thuật viên vận hành thiết bị</option>
+										<option value="17">Kĩ thuật viên kiểm thử phần mềm</option>
+										<option value="18">Chuyên viên SEO</option>
+										<option value="19">Nhân viên Marketing Online</option>
+										<option value="20">Nhân viên Marketing Media</option>
+										<option value="21">Nhân viên Content Marketing</option>
+										<option value="22">Chuyên viên chăm sóc khách hàng</option>
+										<option value="23">Nhân viên bán hàng</option>
+										<option value="24">Nhân viên tư vấn dịch vụ</option>
+										<option value="25">Nhân viên văn phòng</option>
+										<option value="26">Nhân viên tổng đài dịch vụ</option>
+										<option value="27">Nhân viên lễ tân</option>
+										<option value="28">Biên dịch viên</option>
+										<option value="29">Nhân viên nhân sự</option>
+									</select>
+								</div>
+								<div style="margin-bottom: 3%">
+									<!-- Kinh nghiệm -->
+									<h3>Kinh nghiệm làm việc<small>*</small></h3>
+									<select
+										style="border-radius:5px;border-color: #6e707e;padding: 5px;width: 98%;line-height: 1.5;border: 2px solid"
+										name="Exp">
+										<option value="0">0</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+									</select>
+								</div>
+								<div style="margin-bottom: 3%">
+									<!-- Education -->
+									<h3>Trường đào tạo<small>*</small></h3>
+									<select
+										style="border-radius:5px;border-color: #6e707e;padding: 5px;width: 98%;line-height: 1.5;border: 2px solid"
+										name="Education">
+										<option value="0">Đại học Bách Khoa</option>
+										<option value="1">Đại học Công nghiệp</option>
+										<option value="2">Đại học Công nghệ thông tin</option>
+										<option value="3">Đại học Khoa học Tự nhiên</option>
+										<option value="4">Đại học GTVT</option>
+										<option value="5">Đại học Mở</option>
+										<option value="6">Đại học HUTECH</option>
+										<option value="7">Đại học ngoại ngữ - tin học</option>
+										<option value="8">Đại học sư phạm kĩ thuật</option>
+										<option value="9">Đại học Ngoại thương</option>
+										<option value="10">Đại học Nông lâm</option>
+										<option value="11">Đại học Hoa sen</option>
+										<option value="12">Đại học Hồng Bàng</option>
+										<option value="13">Đại học Tôn Đức Thắng</option>
+										<option value="14">Đại học Trần Đại Nghĩa</option>
+										<option value="15">Đại học Văn Lang</option>
+										<option value="16">Đại học Nguyễn Tất Thành</option>
+										<option value="17">Đại học Văn Hiến</option>
+										<option value="18">Đại học Quốc tế Sài Gòn</option>
+										<option value="19">Đại học Đồng Nai</option>
+									</select>
+								</div>
+								<div style="margin-bottom: 3%">
+									<!-- Certificate -->
+									<h3>Các bằng cấp còn lại<small>*</small></h3>
+									<select
+										style="border-radius:5px;border-color: #6e707e;padding: 5px;width: 98%;line-height: 1.5;border: 2px solid"
+										name="Cer">
+										<option value="0">0</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+									</select>
+								</div>
+							</fieldset>
+						</td>
+						<td style="width:1%"></td>
+						<td>
+							<fieldset>
+								<legend>Một vài thông tin khác</legend>
+								<div style="margin-bottom: 4%">
+									<h3>Dự án đã làm<small>*</small></h3>
+									<select
+										style="border-radius:5px;border-color: #6e707e;padding: 5px;width: 98%;line-height: 1.5;border: 2px solid"
+										name="Project">
+										<option value="0">0</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+									</select>
+								</div>
+								<div style="margin-bottom: 3%">
+									<h3>GPA<small>*</small></h3>
+									<input type="text"
+										style="border-radius:5px;border-color: #8e91ad;padding: 5px;width: 95%;line-height: 1.5"
+										name="GPA" />
+								</div>
+								<div style="margin-bottom: 26%">
+									<h3>IELTS/TOEIC<small>*</small></h3>
+									<select
+										style="border-radius:5px;border-color: #6e707e;padding: 5px;width: 98%;line-height: 1.5;border: 2px solid"
+										name="TOIE">
+										<option value="0">No</option>
+										<option value="1">Yes</option>
+									</select>
+								</div>
+							</fieldset>
+						</td>
+					</tbody>
+				</table>
+				<div style="margin-top: 3%">
+					<button type="submit"
+						style="color: #fff; background-color: #1cc88a; border-color: #1cc88a;text-align: center;vertical-align: middle;padding: 15px;font-size: 1rem;	line-height: 1.5;	border-radius: .35rem;border: 1px solid transparent;font-weight: 400;">Đánh
+						giá CV</button>
+						<a href = "{{ url_for('companyCV') }}" role="button"
+						style="display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;	vertical-align: middle;user-select: none; border: 1px solid transparent; padding: 15px;  font-size: 1rem; line-height: 1.5;  border-radius: .25rem; text-decoration: none; color: #fff; background-color: #007bff; border-color: #007bff;cursor: pointer;">Đánh giá nhiều CV</a>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+</html>
