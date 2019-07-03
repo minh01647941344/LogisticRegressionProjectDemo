@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Logistic Regression</title>
+</head>
+
+<body>
+	<form action="/createModel" enctype="multipart/form-data" method="POST">
+		<div align="center" style="margin-top:10%;margin-bottom: 5%">
+			<h1 style="color:blue">Training Machine Learning Model</h1>
+            <h4 style="color:red;margin-bottom: 5%">Chú ý: Chọn bộ dữ liệu mà bạn muốn Model học!</h4>
+            <input type="file" name="data"/>
+		</div>
+		<div align="center">
+			<button type="submit" style="color: #fff; background-color: #e74a3b; border-color: #e74a3b;text-align: center;vertical-align: middle;padding: 10px;font-size: 1rem;	line-height: 1.5;	border-radius: .35rem;border: 1px solid transparent;font-weight: 400;">Training</button>
+		</div>
+	</form>
+</body>
+
+</html>

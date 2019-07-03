@@ -5,8 +5,9 @@ import flask
 import pickle
 from flask import Flask,render_template,url_for,request
 from flask_bootstrap import Bootstrap
-import os
+import io
 import tablib
+import csv
 
 app = Flask(__name__)
 dataset = tablib.Dataset()
@@ -81,6 +82,22 @@ def companyCV():
         data = dataset.csv
         return render_template("companyCV.html",data=data)
 
+@app.route('/trainingAnotherModel')
+def trainingAnotherModel():
+    return render_template("createNewModel.html")
+
+@app.route('/createModel',methods=['POST'])
+def createModel():
+    #Check method
+    if request.method == 'POST':
+        f = request.files['data']
+        # Check file exist
+        if not f:
+            return "No file"
+        # Read file and tranform to dataframe
+        df = pd.read_excel(f)
+        # Note: clean and prepare file before training and create model
+        return render_template("TrainedModel.html",data=df)
 
 if __name__ == '__main__':
     app.run(debug=True)

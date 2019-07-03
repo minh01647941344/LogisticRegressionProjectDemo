@@ -154,17 +154,14 @@
 									</select>
 								</div>
 								<div style="margin-bottom: 3%">
-									<!-- Certificate -->
-									<h3>Các bằng cấp còn lại<small>*</small></h3>
+									<!-- Education -->
+									<h3>Bằng cấp<small>*</small></h3>
 									<select
 										style="border-radius:5px;border-color: #6e707e;padding: 5px;width: 98%;line-height: 1.5;border: 2px solid"
-										name="Cer">
-										<option value="0">0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
+										>
+										<option value="0">Đại học</option>
+										<option value="1">Cao đẳng</option>
+										<option value="2">Chưa có bằng</option>
 									</select>
 								</div>
 							</fieldset>
@@ -188,12 +185,26 @@
 									</select>
 								</div>
 								<div style="margin-bottom: 3%">
+									<!-- Certificate -->
+									<h3>Các chứng chỉ còn lại<small>*</small></h3>
+									<select
+										style="border-radius:5px;border-color: #6e707e;padding: 5px;width: 98%;line-height: 1.5;border: 2px solid"
+										name="Cer">
+										<option value="0">0</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+									</select>
+								</div>
+								<div style="margin-bottom: 3%">
 									<h3>GPA<small>*</small></h3>
 									<input type="text"
 										style="border-radius:5px;border-color: #8e91ad;padding: 5px;width: 95%;line-height: 1.5"
 										name="GPA" />
 								</div>
-								<div style="margin-bottom: 26%">
+								<div style="margin-bottom: 3%">
 									<h3>IELTS/TOEIC<small>*</small></h3>
 									<select
 										style="border-radius:5px;border-color: #6e707e;padding: 5px;width: 98%;line-height: 1.5;border: 2px solid"
@@ -212,6 +223,8 @@
 						giá CV</button>
 						<a href = "{{ url_for('companyCV') }}" role="button"
 						style="display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;	vertical-align: middle;user-select: none; border: 1px solid transparent; padding: 15px;  font-size: 1rem; line-height: 1.5;  border-radius: .25rem; text-decoration: none; color: #fff; background-color: #007bff; border-color: #007bff;cursor: pointer;">Đánh giá nhiều CV</a>
+						<a href = "{{ url_for('trainingAnotherModel') }}" role="button"
+						style="display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;	vertical-align: middle;user-select: none; border: 1px solid transparent; padding: 15px;  font-size: 1rem; line-height: 1.5;  border-radius: .25rem; text-decoration: none; color: #fff; background-color: rgb(15, 92, 15); border-color: rgb(15, 92, 15);cursor: pointer;">Huấn luyện</a>
 				</div>
 			</div>
 		</div>
