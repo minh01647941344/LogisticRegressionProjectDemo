@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <meta charset="utf-8"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Logistic Regression</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/newIndex">
+        <textarea hidden id="saveCSV">{{data}}</textarea>
+        <div align="center" style="margin-top:2%;margin-bottom: 5%">
+            <h1 style="color:blue">Kết quả đánh giá</h1>
+            <input type="button" id="load" value="Đánh giá kết quả"
+                style="margin-bottom:2%;color: #fff; background-color: #1cc88a; border-color: #1cc88a;text-align: center;vertical-align: middle;padding: 10px;font-size: 1rem;	line-height: 1.5;	border-radius: .35rem;border: 1px solid transparent;font-weight: 400;" />
+            <input type="button" id="chart" value="Biểu đồ đánh giá"
+                style="margin-bottom:2%;color: #fff; background-color: #1cc88a; border-color: #1cc88a;text-align: center;vertical-align: middle;padding: 10px;font-size: 1rem;	line-height: 1.5;	border-radius: .35rem;border: 1px solid transparent;font-weight: 400;" />
+            <div id="chart_div">
+
+            </div>
+            <div id="tableCustom">
+
+            </div>
+        </div>
+        <div align="center">
+            <button type="submit"
+                style="color: #fff; background-color: #e74a3b; border-color: #e74a3b;text-align: center;vertical-align: middle;padding: 10px;font-size: 1rem;	line-height: 1.5;	border-radius: .35rem;border: 1px solid transparent;font-weight: 400;">Quay
+                lại trang chủ</button>
+        </div>
+    </form>
+</body>
+<script>
+    $(document).ready(function () {
+        
+        //Declare variable to contain data
+        var dataID = document.getElementById('saveCSV');
+        var data = dataID.value;
+        var cv_data = data.split(/\r?\n|\r/);
+        
+        //button Load Data
+        $('#load').click(function () {      
+            //Draw table and load data         
+            var table_data = '<table>';
+            for (var count = 0; count < cv_data.length - 1; count++) {
+                var cell_data = cv_data[count].split(",");
+                table_data += '<tr>';
+                for (var cell_count = 0; cell_count < cell_data.length; cell_count++) {
+                    if (count === 0) {
+                        table_data += '<th>' + cell_data[cell_count] + '</th>';
+                    } else {
+                        table_data += '<td>' + cell_data[cell_count] + '</td>';
+                    }
+                }
+                table_data += '</tr>';
+            }
+            table_data += '</table>';
+
+            var tableID = document.getElementById('tableCustom');
+            tableID.innerHTML = table_data;
+
+            // $('#tableCustom').html(table_data);
+        });
+
+        //Button Draw Chart
+        $('#chart').click(function () {
+            // Load the Visualization API and the corechart package.
+            google.charts.load('current', { 'packages': ['corechart'] });
+
+            // Set a callback to run when the Google Visualization API is loaded.
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Callback that creates and populates a data table,
+            // instantiates the pie chart, passes in the data and
+            // draws it.
+            function drawChart() {
+                debugger
+                var lengthOfArray = cv_data.length;
+                var passQuantity = 0;
+                for(var count = 1;count <lengthOfArray-1;count++){
+                    var cell_data = cv_data[count].split(",");
+                    if(cell_data[11] == "Đậu"){
+                        passQuantity = passQuantity + 1;
+                    }
+                }
+                // Create the data table.
+                var dataChart = new google.visualization.DataTable();
+                dataChart.addColumn('string', 'Result');
+                dataChart.addColumn('number', 'quantity');
+                dataChart.addRows([
+                    ['Đậu', passQuantity],
+                    ['Rớt', lengthOfArray - passQuantity -2],
+                ]);
+
+                // Set chart options
+                var options = {
+                    'title': 'Số lượng CV đậu hoặc rớt',
+                    'width': 600,
+                    'height': 400
+                };
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                chart.draw(dataChart, options);
+            }
+        });
+    })
+</script>
+
+</html>
