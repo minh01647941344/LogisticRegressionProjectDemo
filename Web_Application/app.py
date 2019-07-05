@@ -22,14 +22,9 @@ with open(os.path.join(os.path.dirname(__file__),'CV.csv'),encoding='utf-8', err
 def index():
     return flask.render_template('index.html')
 
-def ValuePredictor(to_predict_list,index):
+def ValuePredictor(to_predict_list):
     to_predict = np.array(to_predict_list).reshape(1,7)
-
-    if index == 1:
-        loaded_model = pickle.load(open("LogisticRegressionModel.pkl","rb"))
-    else:
-        loaded_model = pickle.load(open("LogisticRegressionTestModel.pkl","rb"))
-
+    loaded_model = pickle.load(open("LogisticRegressionModel.pkl","rb"))
     result = loaded_model.predict(to_predict)
     return result[0]
 
@@ -151,50 +146,12 @@ def result():
         to_predict_list = request.form.to_dict()
         to_predict_list=list(to_predict_list.values())
         to_predict_list = list(map(float, to_predict_list))
-        result = ValuePredictor(to_predict_list,1)
+        result = ValuePredictor(to_predict_list)
         if int(result) == 1:
-            prediction="đạt"
+            prediction="đậu"
         else:
-            prediction="chưa đạt"
+            prediction="rớt"
         return render_template("result.html",prediction=prediction)
-
-@app.route('/companyCV',methods=['GET'])
-def companyCV():
-    if request.method == 'GET':
-        
-        # Declare location of CSV and excel file
-        file_csv = 'C:\\Users\\HELLO\\Desktop\\Final_Project\\Web_Application\\CV.csv'
-        file_errors_location = 'C:\\Users\\HELLO\\Desktop\\Final_Project\\Web_Application\\Dataset\\CompanyCV.xlsx'
-
-        # load excel and csv
-        dfCSV = pd.read_csv(file_csv)
-        df = pd.read_excel(file_errors_location)
-        
-        # Concat Result Column into file Excel
-        df = pd.concat([df,dfCSV['Result']],axis=1)
-
-        # Declare Variable contain column
-        FullName = df['Full Name']
-        Birthday = df['Birthday']
-        Address = df['Address']
-        Phone = df['Phone']
-        Position = df['Position']
-        Experiences = df['Year of experiences']
-        Education = df['Education']
-        Certificates = df['Number of certificates']
-        Projects = df['Number of Projects']
-        GPA = df['GPA']
-        TOIE = df['TOEIC/IELTS']
-        Result = df['Result']
-
-        # Convert dataframe to CSV
-        dict = {'Full Name':FullName,'Birthday':Birthday,'Address':Address,'Phone':Phone,'Position': Position, 'Year of experiences': Experiences, 'Education': Education, 'Number of certificates':Certificates, 'Number of Projects':Projects, 'GPA':GPA, 'TOEIC/IELTS':TOIE, 'Result':Result} 
-        companyCV = pd.DataFrame(dict)
-        companyCV.to_csv(r'C:\\Users\\HELLO\\Desktop\\Final_Project\\Web_Application\\CV.csv', index=False)
-
-        #Load file CSV and pass for companyCV.html
-        data = dataset.csv
-        return render_template("companyCV.html",data=data)
 
 @app.route('/trainingAnotherModel')
 def trainingAnotherModel():
@@ -223,32 +180,14 @@ def createModel():
         logmodel.fit(X_train,y_train)
         predictions = logmodel.predict(X_test)
         Accuracy = accuracy_score(y_test,predictions)*100
-        pickle.dump(logmodel, open("C:\\Users\\HELLO\\Desktop\\Final_Project\\Web_Application\\LogisticRegressionTestModel.pkl","wb"))
+        pickle.dump(logmodel, open("C:\\Users\\HELLO\\Desktop\\Final_Project\\Web_Application\\LogisticRegressionModel.pkl","wb"))
         return render_template("TrainedModel.html",Accuracy=Accuracy)
 
-@app.route('/newIndex')
-def newIndex():
-    return render_template("newIndex.html")
-
-@app.route('/newResult',methods = ['POST'])
-def newResult():
-    if request.method == 'POST':
-        to_predict_list = request.form.to_dict()
-        to_predict_list=list(to_predict_list.values())
-        to_predict_list = list(map(float, to_predict_list))
-        result = ValuePredictor(to_predict_list,2)
-        if int(result) == 1:
-            prediction="đạt"
-        else:
-            prediction="chưa đạt"
-        return render_template("newResult.html",prediction=prediction)
-
-
-@app.route('/newCompanyCV',methods=['GET'])
-def newCompanyCV():
+@app.route('/companyCV',methods=['GET'])
+def companyCV():
     if request.method == 'GET':
         # Load Model
-        loaded_model = pickle.load(open("LogisticRegressionTestModel.pkl","rb"))
+        loaded_model = pickle.load(open("LogisticRegressionModel.pkl","rb"))
 
         # Declare location of CSV and excel file       
         file_errors_location = 'C:\\Users\\HELLO\\Desktop\\Final_Project\\Web_Application\\Dataset\\CompanyCV.xlsx'
@@ -272,13 +211,13 @@ def newCompanyCV():
         resultCSV = pd.concat([temp,dataframeOfPredict],axis=1)
 
         # Convert to CSV and read file
-        resultCSV.to_csv(r'C:\\Users\\HELLO\\Desktop\\Final_Project\\Web_Application\\newCV.csv', index=False)
+        resultCSV.to_csv(r'C:\\Users\\HELLO\\Desktop\\Final_Project\\Web_Application\\CV.csv', index=False)
         newDataset = tablib.Dataset()
-        with open(os.path.join(os.path.dirname(__file__),'newCV.csv'),encoding='utf-8', errors='ignore') as f:
+        with open(os.path.join(os.path.dirname(__file__),'CV.csv'),encoding='utf-8', errors='ignore') as f:
             newDataset.csv = f.read()
         data = newDataset.csv
 
-        return render_template("newCompanyCV.html",data=data)
+        return render_template("companyCV.html",data=data)
 
 if __name__ == '__main__':
     app.run(debug=True)
