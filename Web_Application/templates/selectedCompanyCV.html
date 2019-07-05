@@ -8,14 +8,14 @@
 </head>
 
 <body>
-	<form action="/createModel" enctype="multipart/form-data" method="POST">
+	<form action="/companyCV" enctype="multipart/form-data" method="POST">
 		<div align="center" style="margin-top:10%;margin-bottom: 5%">
-			<h1 style="color:blue">Training Machine Learning Model</h1>
-            <h4 style="color:red;margin-bottom: 5%">Chú ý: Chọn bộ dữ liệu mà bạn muốn Model học!</h4>
+			<h1 style="color:blue">Chọn dữ liệu</h1>
+            <h4 style="color:red;margin-bottom: 5%">Chú ý: Chọn bộ dữ liệu mà bạn muốn đánh giá!</h4>
             <input type="file" name="data"/>
 		</div>
 		<div align="center">
-			<button type="submit" style="color: #fff; background-color: #28a745; border-color: #28a745;text-align: center;vertical-align: middle;padding: 10px;font-size: 1rem;	line-height: 1.5;	border-radius: .35rem;border: 1px solid transparent;font-weight: 400;">Huấn luyện</button>
+			<button type="submit" style="color: #fff; background-color: #28a745; border-color: #28a745;text-align: center;vertical-align: middle;padding: 10px;font-size: 1rem;	line-height: 1.5;	border-radius: .35rem;border: 1px solid transparent;font-weight: 400;">Đánh giá</button>
 			<a href = "{{ url_for('index') }}" role="button"
 						style="display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;	vertical-align: middle;user-select: none; border: 1px solid transparent; padding: 15px;  font-size: 1.2rem; line-height: 0.8;  border-radius: .25rem; text-decoration: none; color: #fff; background-color: #dc3545; border-color: #dc3545;cursor: pointer;">Quay lại</a>
 		</div>

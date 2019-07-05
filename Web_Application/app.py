@@ -183,18 +183,25 @@ def createModel():
         pickle.dump(logmodel, open("C:\\Users\\HELLO\\Desktop\\Final_Project\\Web_Application\\LogisticRegressionModel.pkl","wb"))
         return render_template("TrainedModel.html",Accuracy=Accuracy)
 
-@app.route('/companyCV',methods=['GET'])
+@app.route('/selectedCompanyCV')
+def selectedCompanyCV():
+    return flask.render_template('selectedCompanyCV.html')
+
+@app.route('/companyCV',methods=['POST'])
 def companyCV():
-    if request.method == 'GET':
+    if request.method == 'POST':
         # Load Model
         loaded_model = pickle.load(open("LogisticRegressionModel.pkl","rb"))
 
-        # Declare location of CSV and excel file       
-        file_errors_location = 'C:\\Users\\HELLO\\Desktop\\Final_Project\\Web_Application\\Dataset\\CompanyCV.xlsx'
+        # get response from selectedCompanyCV
+        f = request.files['data']
+        if not f:
+            return "No file"
         
         # load excel and csv
-        df = pd.read_excel(file_errors_location)
-        temp = pd.read_excel(file_errors_location)
+        df = pd.read_excel(f)
+        temp = pd.read_excel(f)
+        
         # Prepare data and clean data
         EnglishCertificate = pd.get_dummies(df['TOEIC/IELTS'])
         df = pd.concat([df,EnglishCertificate],axis=1)
