@@ -165,7 +165,7 @@ def createModel():
         # Check file exist
         if not f:
             return "No file"
-        # Read file and tranform to dataframe
+        # Read file and tranform to dataframe and training model
         df = pd.read_excel(f)
         EnglishCertificate = pd.get_dummies(df['TOEIC/IELTS'])
         InterviewResult = pd.get_dummies(df['Interview Result'],drop_first=True)
@@ -179,8 +179,11 @@ def createModel():
         logmodel = LogisticRegression(solver='lbfgs',multi_class='auto')
         logmodel.fit(X_train,y_train)
         predictions = logmodel.predict(X_test)
+        # evaluate accuracy of model
         Accuracy = accuracy_score(y_test,predictions)*100
-        pickle.dump(logmodel, open("C:\\Users\\HELLO\\Desktop\\Final_Project\\Web_Application\\LogisticRegressionModel.pkl","wb"))
+        # pack model
+        pickle.dump(logmodel, open("LogisticRegressionModel.pkl","wb"))
+        
         return render_template("TrainedModel.html",Accuracy=Accuracy)
 
 @app.route('/selectedCompanyCV')
@@ -218,7 +221,7 @@ def companyCV():
         resultCSV = pd.concat([temp,dataframeOfPredict],axis=1)
 
         # Convert to CSV and read file
-        resultCSV.to_csv(r'C:\\Users\\HELLO\\Desktop\\Final_Project\\Web_Application\\CV.csv', index=False)
+        resultCSV.to_csv(r'CV.csv', index=False)
         newDataset = tablib.Dataset()
         with open(os.path.join(os.path.dirname(__file__),'CV.csv'),encoding='utf-8', errors='ignore') as f:
             newDataset.csv = f.read()
