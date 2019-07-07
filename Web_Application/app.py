@@ -13,9 +13,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
 app = Flask(__name__)
-dataset = tablib.Dataset()
-with open(os.path.join(os.path.dirname(__file__),'CV.csv'),encoding='utf-8', errors='ignore') as f:
-    dataset.csv = f.read()
 
 @app.route('/')
 @app.route('/index')
