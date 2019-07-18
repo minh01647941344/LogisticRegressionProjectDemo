@@ -169,7 +169,7 @@ def createModel():
         df = pd.concat([df,EnglishCertificate,InterviewResult],axis=1)
         df['Position']=df['Position'].apply(markLabel_Position)
         df['Education']=df['Education'].apply(markLabel_Education)
-        df.drop(['Full Name','Birthday','Address','Phone','không','TOEIC/IELTS','Interview Result'],axis=1,inplace=True)
+        df.drop(['Full Name','Birthday','Address','Phone','no','TOEIC/IELTS','Interview Result'],axis=1,inplace=True)
         X = df.drop('Pass',axis=1)
         y = df['Pass']
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=101)
@@ -207,7 +207,7 @@ def companyCV():
         df = pd.concat([df,EnglishCertificate],axis=1)
         df['Position']=df['Position'].apply(markLabel_Position)
         df['Education']=df['Education'].apply(markLabel_Education)
-        df.drop(['Full Name','Birthday','Address','Phone','không','TOEIC/IELTS'],axis=1,inplace=True)
+        df.drop(['Full Name','Birthday','Address','Phone','no','TOEIC/IELTS'],axis=1,inplace=True)
 
         # Predict data
         prediction = loaded_model.predict(df)
